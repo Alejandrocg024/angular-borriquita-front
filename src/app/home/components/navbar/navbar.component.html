@@ -1,0 +1,35 @@
+<mat-toolbar color="primary" style="padding: 25px;">
+  <a routerLink="/"><shared-lazy-image [url]="'images/logo-navbar.png'" [alt]="'Hermandad Sacramental de la Borriquita'"
+      [width]="'300px'" [height]="'90px'"></shared-lazy-image></a>
+
+  <span class="remaining-space"></span>
+
+  <div class="buttons">
+    <button mat-button class="navbar-button" style="color: whitesmoke;" routerLink="/" routerLinkActive="active-button">
+      Inicio
+    </button>
+    <button mat-button class="navbar-button" style="color: whitesmoke;" routerLink="/hermandad"
+      routerLinkActive="active-button">
+      Hermandad
+    </button>
+    <button mat-button class="navbar-button" style="color: whitesmoke;" routerLink="/noticias"
+      routerLinkActive="active-button">
+      Noticias
+    </button>
+    <button mat-button class="navbar-button" style="color: whitesmoke;" routerLink="/eventos"
+      routerLinkActive="active-button">
+      Eventos
+    </button>
+    <button *ngIf="logged" mat-button class="navbar-button" style="color: whitesmoke;"
+      routerLink="/hermanos" routerLinkActive="active-button">
+      Perfil
+    </button>
+    <button *ngIf="!logged" mat-button class="navbar-button" style="color: whitesmoke;"
+      routerLink="/hermanos" routerLinkActive="active-button">
+      Iniciar Sesión
+    </button>
+    <button *ngIf="logged"  mat-button class="navbar-button" style="color: whitesmoke;" (click)="onLogout()">
+      <mat-icon style="font-size: 32px; width: 32px; height: 32px;">logout</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

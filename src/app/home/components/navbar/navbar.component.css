@@ -1,0 +1,25 @@
+
+.remaining-space {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  height: 100px;
+  min-height: 100px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar-button {
+  font-size: large;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 0 10px;
+}

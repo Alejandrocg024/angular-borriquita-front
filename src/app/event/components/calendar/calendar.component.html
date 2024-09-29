@@ -1,0 +1,43 @@
+<mat-card>
+  <mat-card-content>
+    <div class='calendar'>
+
+      <div class='sidebar'>
+        <!-- <div class='sidebar-section'>
+          <h2>Instrucciones</h2>
+          <ul>
+            <li>Selecciona en una fecha para crear un nuevo evento</li>
+            <li>Puedes arrastrar, cambiar el tamaño del evento</li>
+            <li>Pulsa en un elemento para eliminarlo</li>
+          </ul>
+        </div>
+        <div class='sidebar-section'>
+          <h2>All Events ({{currentEvents().length}})</h2>
+          <ul>
+            <li *ngFor='let event of currentEvents()'>
+              <b>{{event.startStr}}</b>
+              <i>{{event.title}}</i>
+            </li>
+          </ul>
+        </div> -->
+      </div>
+
+      <div class='main'>
+        <full-calendar *ngIf='calendarVisible()' [options]='calendarOptions()'>
+          <ng-template #eventContent let-arg>
+            <b>{{ arg.timeText }}</b>
+            <i>{{ arg.event.title }}</i>
+          </ng-template>
+        </full-calendar>
+      </div>
+
+    </div>
+  </mat-card-content>
+  <mat-card-actions style="margin: auto;">
+    <button mat-button color="primary" (click)="onNewEvent()">
+      <mat-icon>add</mat-icon>
+      <span>Crear Evento</span>
+    </button>
+  </mat-card-actions>
+</mat-card>
+

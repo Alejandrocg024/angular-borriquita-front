@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>¿Está seguro?</h1>
+<div mat-dialog-content>
+  <p>Este proceso no es reversible, está a punto de elimiar: {{ data.title }}</p>
+</div>
+<div mat-dialog-actions class="justify-content-around">
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button color="primary" (click)="onConfirm()" cdkFocusInitial>Eliminar</button>
+</div>

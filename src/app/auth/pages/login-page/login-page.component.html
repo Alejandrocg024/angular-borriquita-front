@@ -1,0 +1,41 @@
+
+<form [formGroup]="myForm" (ngSubmit)="onLogin()" autocomplete="off">
+  <mat-card style="width: 50vh; margin: auto; margin-top: 10vh;">
+
+    <mat-card-header>
+      <h1>Inicio de sesión</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="flex flex-column">
+        <mat-form-field>
+          <mat-label>DNI</mat-label>
+          <input type="text" matInput formControlName="dni" placeholder="12345678Z">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Contraseña</mat-label>
+          <input type="text" matInput formControlName="password" placeholder="Contraseña">
+        </mat-form-field>
+      </div>
+
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin: auto;">
+        <button mat-fab extended type="submit" color="primary">
+          <mat-icon>save</mat-icon>
+          Iniciar
+        </button>
+
+        <a mat-button color="primary" routerLink="/auth/new-account">
+          ¿No tienes cuenta?
+        </a>
+      </div>
+
+    </mat-card-actions>
+
+
+
+  </mat-card>
+</form>

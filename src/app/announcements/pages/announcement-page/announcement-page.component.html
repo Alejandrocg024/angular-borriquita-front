@@ -1,0 +1,51 @@
+<ng-template #divLoading>
+  <div class="flex pt-5 justify-content-center h-screen">
+    <mat-spinner></mat-spinner>
+  </div>
+
+</ng-template>
+
+
+<div *ngIf="announcement; else divLoading" class="grid p-2">
+
+
+  <div *ngIf="announcement.media" class="div-image col-12 p-0">
+    <img mat-card-image class="image" (click)="openFullScreen()" [src]="announcement.media"
+      [alt]="announcement.title">
+  </div>
+
+  <mat-card class="col-12">
+    <mat-card-header>
+      <mat-card-title><h1>{{ announcement.title }}</h1></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="!announcement.available" class="flex">
+        <mat-chip color="primary">
+          Noticia no publicada
+        </mat-chip>
+      </div>
+      <p style="grid: 5px;">
+
+        <strong>Autor:</strong> {{ announcement.author.name }} {{ announcement.author.lastname }}
+        <br>
+        <strong>Fecha de Publicación:</strong> {{ announcement.publicationDate | date: 'dd/MM/yyyy' }}
+        <br>
+        <strong>Fecha de Modificación:</strong> {{ announcement.modificationDate| date: 'dd/MM/yyyy' }}
+      </p>
+
+      <p style="text-align: justify; line-height: 1.5;">{{ announcement.body }}</p>
+    </mat-card-content>
+    <mat-card-footer class="p-2">
+      <span class="flex justify-content-around">
+        <button *ngIf="user?.role === Role.Admin || user?.role === Role.Comm" mat-raised-button [routerLink]="['../editar/', this.announcement.id]" color="primary">
+          <mat-icon>edit</mat-icon>
+          Editar
+        </button>
+        <button mat-raised-button color="accent" [routerLink]="['../']">
+          <mat-icon>more_horiz</mat-icon>
+          Ver más noticias
+        </button>
+      </span>
+    </mat-card-footer>
+  </mat-card>
+</div>

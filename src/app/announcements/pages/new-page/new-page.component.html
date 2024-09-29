@@ -1,0 +1,73 @@
+
+<ng-template #nuevaNoticia>
+  <h1>
+    Nueva noticia
+  </h1>
+</ng-template>
+
+<h1 *ngIf="this.currentAnnouncement.id else nuevaNoticia">
+  Editar noticia
+</h1>
+
+<mat-divider></mat-divider>
+
+<div class="grid p-2">
+
+  <div *ngIf="loading" class="div-image flex col-12 justify-content-center" style="width: 100%;">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="currentAnnouncement.media" class="div-image col-12 p-0">
+    <img mat-card-image class="image" (click)="openFullScreen()" [src]="currentAnnouncement.media"
+      [alt]="currentAnnouncement.title">
+  </div>
+
+  <div>
+    <mat-card class="col-12">
+      <mat-card-content>
+        <form class="grid" [formGroup]="announcementForm" (ngSubmit)="onSubmit()">
+
+          <mat-form-field class="col-12">
+            <mat-label>Título</mat-label>
+            <input matInput type="text" required formControlName="title" />
+          </mat-form-field>
+
+
+
+          <mat-form-field class="col-12">
+            <mat-label>Cuerpo de la noticia</mat-label>
+            <textarea matInput required rows="5" formControlName="body"></textarea>
+          </mat-form-field>
+
+          <div class="col-12 flex">
+            <mat-label *ngIf="this.currentAnnouncement.id" class="col-6 sm:col-4 md:col-2 ">Cambiar la imagen:</mat-label>
+            <mat-label *ngIf="!this.currentAnnouncement.id" class="col-1">Imagen:</mat-label>
+            <div class="col-11">
+              <input type="file"  (change)="onFileSelected($event)"/>
+            </div>
+          </div>
+
+
+          <div class="col-12" style="display: flex; justify-content: center; align-items: center;">
+
+            <mat-label class="text-2xl pr-5">¿Noticia ya disponible?</mat-label>
+            <mat-slide-toggle formControlName="available" style="transform: scale(1.5);"></mat-slide-toggle>
+
+          </div>
+        </form>
+
+        <p style="text-align: justify; line-height: 1.5;"></p>
+        <span class="flex justify-content-around">
+          <button mat-raised-button (click)="onDeleteHero()" color="warn">
+            <mat-icon>delete</mat-icon>
+            Borrar
+          </button>
+          <button mat-raised-button color="accent" type="submit" (click)="onSubmit()">
+            <mat-icon>save</mat-icon>
+            Guardar
+          </button>
+        </span>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div *ngIf="images && images.length > 0" class="carousel-container">
+  <div class="carousel-wrapper">
+    <!-- <shared-lazy-image *ngFor="let image of images; let i=index"
+    [url]=image.imageSrc
+    [alt]="'Hermandad Sacramental de la Borriquita'"
+    [width]="'800px'"
+    [height]="'800px'"
+    [ngClass]="{ 'image-active': selectedIndex === i }"></shared-lazy-image> -->
+
+    <img *ngFor="let image of images; let i=index" class="animate__animated animate__fadeIn" [src]="image.imageSrc"
+      [alt]="image.alt" [ngClass]="{ 'image-active': selectedIndex === i }">
+
+    <div class="carousel-dot-container">
+      <span *ngFor="let dot of images; let i=index" class="dot" [ngClass]="{ 'active': selectedIndex === i }"
+        (click)="selectImage(i)"></span>
+    </div>
+
+    <div class="btn-carousel btn-prev">
+      <div class="icon-circle">
+        <mat-icon class="icon-carousel icon" (click)="prevImage()">chevron_left</mat-icon>
+      </div>
+    </div>
+
+    <div class="btn-carousel btn-next">
+      <div class="icon-circle">
+        <mat-icon class="icon-carousel icon" (click)="nextImage()">chevron_right</mat-icon>
+      </div>
+    </div>
+  </div>
+</div>

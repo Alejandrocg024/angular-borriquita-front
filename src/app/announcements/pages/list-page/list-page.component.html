@@ -1,0 +1,30 @@
+<div class="flex" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+  <h1 class="col-4" style="flex: 1;">Listado de Noticias</h1>
+  <div class="col-4" style="flex: 1; display: flex; justify-content: center;">
+    <button *ngIf="userRol === Role.Admin || userRol === Role.Comm" mat-fab extended color="accent" [routerLink]="['./nueva']">
+      <mat-icon>edit</mat-icon>
+      <span>Crear Noticia</span>
+    </button>
+  </div>
+  <span class="col-4" *ngIf="userRol === Role.Admin || userRol === Role.Comm" style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+    <mat-slide-toggle labelPosition="before" (change)="filterAnnouncements()" [(ngModel)]="isAllVisible" style="transform: scale(1.2);">Ver noticias no publicadas</mat-slide-toggle>
+  </span>
+</div>
+
+<mat-divider></mat-divider>
+
+<ng-template #divLoading>
+  <div class="flex pt-5 justify-content-center h-screen">
+
+    <mat-spinner></mat-spinner>
+  </div>
+
+</ng-template>
+
+<div *ngIf="displayAnnouncements; else divLoading" class="grid bm-8 pt-2">
+  <div *ngFor="let ann of displayAnnouncements" class="col-12 sm:col-12 md:col-6 xl:col-4">
+    <div class="p-3">
+      <announcement-card-component [announcement]="ann"></announcement-card-component>
+    </div>
+  </div>
+</div>

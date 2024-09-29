@@ -1,0 +1,14 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary);
+  color: white;
+  margin: 0; /* Sin margen */
+  position: relative; /* Posición normal */
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
