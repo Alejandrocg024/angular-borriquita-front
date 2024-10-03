@@ -8,6 +8,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDateFormats, provideNativeDateAdapter } from '@angular/material/core';
 import { addDays } from '@fullcalendar/core/internal';
+import { DateSelectArg } from '@fullcalendar/core/index.js';
+
+export interface DataRequest {
+  id?: string;
+  selectInfo?: DateSelectArg;
+}
 
 @Component({
   selector: 'event-event-page',
@@ -18,20 +24,22 @@ import { addDays } from '@fullcalendar/core/internal';
 export class EventPageComponent implements OnInit {
   @Output() eventUpdated = new EventEmitter<void>();
 
+
   public event?: Event;
   public user: User | null = null;
   public Role = Role;
   public selectedTime: string = '';
   public isEditMode: boolean = false;
+  public serverErrors: string | null = null;
 
   public eventForm = new FormGroup(
     {
       id: new FormControl(''),
-      title: new FormControl('Pruebita', [Validators.required]),
+      title: new FormControl('Pruebita', [Validators.required, Validators.minLength(5)]),
       startDate: new FormControl<Date>(new Date(), [Validators.required]),
       endDate: new FormControl<Date>(new Date(), [Validators.required]),
       allDay: new FormControl<Boolean>(true, [Validators.required]),
-      description: new FormControl('LOcura', [Validators.required]),
+      description: new FormControl('LOcura', [Validators.required, Validators.minLength(5)]),
       location: new FormControl(''),
     }
   );
@@ -50,7 +58,7 @@ export class EventPageComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<EventPageComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string,
+    @Inject(MAT_DIALOG_DATA) public data: DataRequest,
     private eventsService: EventsService,
     private authService: AuthService,
     private snackbar: MatSnackBar,
@@ -59,8 +67,11 @@ export class EventPageComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.currentUser();
 
-    if (this.data) {
-      this.eventsService.getEventById(this.data)
+    console.log((this.user!.role === Role.Admin || this.user!.role === Role.Comm))
+
+    if(!this.data) this.isEditMode = true;
+    else if (this.data.id) {
+      this.eventsService.getEventById(this.data.id)
         .subscribe(event => {
           if (!event) return this.dialogRef.close();
           // this.range.setValue({ start: event.startDate, end: event.endDate });
@@ -78,8 +89,13 @@ export class EventPageComponent implements OnInit {
           this.event = event;
           this.eventForm.reset(event);
         })
-    } else {
+    } else if (this.data.selectInfo && (this.user!.role === Role.Admin || this.user!.role === Role.Comm)) {
       this.isEditMode = true;
+      const { startStr, endStr } = this.data.selectInfo;
+      console.log('startStr', startStr);
+      console.log('endStr', endStr);
+      const dates = { startDate: new Date(startStr), endDate: new Date(endStr) };
+      this.eventForm.patchValue(dates);
     }
   }
 
@@ -109,33 +125,43 @@ export class EventPageComponent implements OnInit {
   }
 
   onSubmit(): void {
-
+    this.eventForm.markAllAsTouched();
 
     if (this.eventForm.invalid) return;
 
     const event = this.currentEventOnForm;
 
-    console.log('event', event);
-
 
     if (event.id) {
       console.log('Actualizando evento');
       this.eventsService.updateEvent(event)
-        .subscribe(event => {
-          this.eventUpdated.emit();
-          this.dialogRef.close();
-          this.showSnackbar(`Evento actualizado!`);
-        });
+        .subscribe({
+          next: (event) => {
+            this.eventUpdated.emit();
+            this.dialogRef.close();
+            this.showSnackbar(`Evento actualizado!`);
+          },
+          error: (message) => {
+            this.serverErrors = message;
+            console.log('Errores del servidor:', this.serverErrors);
+          }
+        })
 
       return;
     } else {
       console.log('Creando evento');
       this.eventsService.addEvent(event)
-        .subscribe(event => {
+      .subscribe({
+        next: (event) => {
           this.eventUpdated.emit();
           this.dialogRef.close();
           this.showSnackbar(`Evento creado!`);
-        });
+        },
+        error: (message) => {
+          this.serverErrors = message;
+          console.log('Errores del servidor:', this.serverErrors);
+        }
+      })
 
       return;
     }

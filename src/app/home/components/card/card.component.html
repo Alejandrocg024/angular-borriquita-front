@@ -1,0 +1,39 @@
+<mat-card>
+  <!-- <mat-card-header>
+    <mat-card-title>{{ announcement.title }}</mat-card-title>
+  </mat-card-header> -->
+
+  <img mat-card-image [src]="announcement.media" [alt]="announcement.title">
+
+  <mat-card-content class="mt-2">
+    <h4>{{ announcement.title }}</h4>
+    <div *ngIf="!announcement.available" class="flex justify-content-center">
+      <mat-chip color="primary">
+        Noticia no publicada
+      </mat-chip>
+    </div>
+    <p style="gap: 5px;">
+      <strong>Autor:</strong> {{ announcement.author.name }}  {{ announcement.author.lastname }}
+      <br>
+      <strong>Fecha de Publicación:</strong> {{ announcement.publicationDate | date: 'dd/MM/yyyy' }}
+    </p>
+  </mat-card-content>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-actions>
+
+    <div class="flex justify-content-around" style="margin: auto;">
+        <button mat-button *ngIf="user?.role === Role.Admin || user?.role === Role.Comm"  mat-raised [routerLink]="['./editar/', this.announcement.id]" color="primary">
+          <mat-icon>edit</mat-icon>
+          Editar
+        </button>
+        <button mat-button mat-raised [routerLink]="['./', this.announcement.id]">
+          <mat-icon>more_horiz</mat-icon>
+          Detalles
+        </button>
+    </div>
+
+  </mat-card-actions>
+
+</mat-card>

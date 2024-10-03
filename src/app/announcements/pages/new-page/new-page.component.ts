@@ -17,15 +17,15 @@ import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-
 export class NewPageComponent implements OnInit {
 
   public loading = false;
-
+  public serverErrors: string | null = null;
   public announcementForm = new FormGroup(
     {
       id: new FormControl(''),
-      title: new FormControl('gbdbgbgdbgd', [Validators.required]),
+      title: new FormControl('', [Validators.required, Validators.minLength(4)]),
       publicationDate: new FormControl<Date>(new Date(), [Validators.required]),
       modificationDate: new FormControl<Date>(new Date(), [Validators.required]),
       available: new FormControl(true, [Validators.required]),
-      body: new FormControl('bgbddbbb', [Validators.required]),
+      body: new FormControl('', [Validators.required, Validators.minLength(4)]),
       media: new FormControl(''),
     }
   );
@@ -70,24 +70,37 @@ export class NewPageComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.announcementForm.markAllAsTouched();
 
     if ( this.announcementForm.invalid ) return;
 
     if ( this.currentAnnouncement.id ) {
       this.announcementsService.updateAnnouncement( this.currentAnnouncement )
-        .subscribe( ann => {
-          this.router.navigate(['/noticias', ann.id ]);
-          this.showSnackbar(`Noticia ${ ann.title } actualizada!`);
-        });
+        .subscribe({
+          next: ann => {
+            this.router.navigate(['/noticias', ann.id ]);
+            this.showSnackbar(`Noticia ${ ann.title } actualizada!`);
+          },
+          error: (message: any) => {
+            this.serverErrors = message;
+            console.log('Errores del servidor:', this.serverErrors);
+          }
+        })
 
       return;
     }
 
     this.announcementsService.addAnnouncement( this.currentAnnouncement )
-      .subscribe( ann => {
-        this.router.navigate(['/noticias', ann.id ]);
-        this.showSnackbar(`Noticia ${ ann.title } creada!`);
-      });
+      .subscribe({
+        next: ann => {
+          this.router.navigate(['/noticias', ann.id ]);
+          this.showSnackbar(`Noticia ${ ann.title } creada!`);
+        },
+        error: (message: any) => {
+          this.serverErrors = message;
+          console.log('Errores del servidor:', this.serverErrors);
+        }
+      })
   }
 
 

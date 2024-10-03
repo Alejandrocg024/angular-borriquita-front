@@ -24,6 +24,19 @@ export class AnnouncementsService {
       );
   }
 
+  getHomeAnnouncements(): Observable<Announcement[]> {
+    return this.http.get<GetAnnouncementResponse>(`${this.baseUrl}/announcement?limit=100`)
+      .pipe(
+        map(response => response.announcements),
+        map(announcements => announcements.sort((a, b) =>
+          new Date(b.publicationDate).getTime() - new Date(a.publicationDate).getTime()
+        ),
+      ), map(announcement => announcement.filter(announcement => announcement.available)),
+      map(announcements => announcements.slice(0, 3)),
+        catchError(error => of([]))
+      );
+  }
+
   getAnnouncementById(id: string): Observable<Announcement | undefined> {
     const token = localStorage.getItem('token');
     return this.http.get<Announcement>(`${this.baseUrl}/announcement/${id}`, {
@@ -42,7 +55,10 @@ export class AnnouncementsService {
         'Authorization': `Bearer ${token}`
       })
     }).pipe(
-      catchError(error => of(error))
+      catchError(error => {
+        const errorMessage = error.error.error || 'Error desconocido';
+        return throwError(errorMessage);
+      })
     );
   }
 
@@ -55,7 +71,10 @@ export class AnnouncementsService {
         'Authorization': `Bearer ${token}`
       })
     }).pipe(
-      catchError(error => of(error))
+      catchError(error => {
+        const errorMessage = error.error.error || 'Error desconocido';
+        return throwError(errorMessage);
+      })
     );
   }
 

@@ -1,0 +1,31 @@
+<mat-card *ngIf="pay" class="user-card p-3">
+  <mat-card-header>
+    <button mat-icon-button color="warn" class="close-button" (click)="onClose()">
+      <mat-icon color="warn">close</mat-icon>  <!-- Ícono de una cruz -->
+    </button>
+    <mat-card-title>
+      {{ pay.concept }} - {{ pay.quantity | number:'1.2-2' }} €
+    </mat-card-title>
+    <mat-card-subtitle>
+      <span [ngClass]="getStateClass(pay.state)">
+        {{ getStateLabel(pay.state) }}
+      </span>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="user-info">
+      <p *ngIf="pay.payMethod"><strong>Pagado con:</strong> {{ getMethodLabel(pay.payMethod) }}</p>
+      <p><strong>User:</strong> {{ user.name }} {{ user.lastname }} (DNI: <strong>{{ user.dni }}</strong>)</p>
+      <p><strong>Fecha de solicitud:</strong> {{ pay.startDate | date: 'dd/MM/yyyy'  }}</p>
+      <p><strong>Fecha de vencimiento:</strong> {{ pay.finishDate | date: 'dd/MM/yyyy'  }}</p>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions *ngIf="pay.state != 'CANCELLED'" class="flex justify-content-around" style="margin: auto;">
+    <button mat-button color="primary"  (click)="onCancel()">
+      <mat-icon>cancel</mat-icon>
+      Cancelar
+    </button>
+  </mat-card-actions>
+</mat-card>

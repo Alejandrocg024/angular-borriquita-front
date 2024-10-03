@@ -27,7 +27,7 @@ export class EventsService {
 
 
   getEvents(): Observable<Event[]> {
-    return this.http.get<GetEventResponse>(`${this.baseUrl}/event`)
+    return this.http.get<GetEventResponse>(`${this.baseUrl}/event?limit=100`)
       .pipe(
         map(response => response.events),
         map(announcements => announcements.sort((a, b) =>
@@ -72,7 +72,10 @@ export class EventsService {
         'Authorization': `Bearer ${token}`
       })
     }).pipe(
-      catchError(error => of(error))
+      catchError(error => {
+        const errorMessage = error.error.error || 'Error desconocido';
+        return throwError(errorMessage);
+      })
     );
   }
 
@@ -95,7 +98,10 @@ export class EventsService {
         'Authorization': `Bearer ${token}`
       })
     }).pipe(
-      catchError(error => throwError(error))
+      catchError(error => {
+        const errorMessage = error.error.error || 'Error desconocido';
+        return throwError(errorMessage);
+      })
     );
   }
 }

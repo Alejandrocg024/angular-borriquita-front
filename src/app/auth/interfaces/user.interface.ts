@@ -6,6 +6,7 @@ export interface User {
   email:          string;
   emailValidated: boolean;
   admissionDate:  Date;
+  password:      string;
   outDate?:       null;
   address?:       string;
   role?:           Role;

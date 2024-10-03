@@ -11,13 +11,23 @@
         <mat-form-field>
           <mat-label>DNI</mat-label>
           <input type="text" matInput formControlName="dni" placeholder="12345678Z">
+          <mat-error *ngIf="myForm.get('dni')?.hasError('required')">El DNI es
+            <strong>requerido</strong>.</mat-error>
+          <mat-error *ngIf="myForm.get('dni')?.hasError('pattern')">Por favor, introduce un DNI
+            válido.</mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Contraseña</mat-label>
-          <input type="text" matInput formControlName="password" placeholder="Contraseña">
+          <input type="password" matInput formControlName="password" placeholder="Contraseña">
+          <mat-error *ngIf="myForm.get('password')?.hasError('required')">La contraseña es <strong>requerida</strong>.</mat-error>
+          <mat-error *ngIf="myForm.get('password')?.hasError('minlength')">La contraseña debe tener 6 caracteres</mat-error>
         </mat-form-field>
       </div>
+
+      <mat-error *ngIf="serverErrors" class="server-error">
+        <span>{{ serverErrors }}</span>
+      </mat-error>
 
     </mat-card-content>
 
@@ -28,7 +38,7 @@
           Iniciar
         </button>
 
-        <a mat-button color="primary" routerLink="/auth/new-account">
+        <a mat-button color="primary" routerLink="/auth/register">
           ¿No tienes cuenta?
         </a>
       </div>

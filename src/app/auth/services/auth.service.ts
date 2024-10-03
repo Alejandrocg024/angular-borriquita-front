@@ -34,7 +34,15 @@ export class AuthService {
     return true;
   }
 
-
+  register( user: User ): Observable<User> {
+    return this.http.post<User>(`${this.baseUrl}/user/register`, user )
+    .pipe(
+      catchError(error => {
+        const errorMessage = error.error.error || 'Error desconocido';
+        return throwError(errorMessage);
+      })
+    );
+  }
 
 
   login( dni: string, password: string ): Observable<boolean> {
@@ -45,7 +53,10 @@ export class AuthService {
     return this.http.post<LoginResponse>( url, body )
       .pipe(
         map( ({ user, token }) => this.setAuthentication( user, token )),
-        catchError( error => of(false) )
+        catchError(error => {
+          const errorMessage = error.error.error || 'Error desconocido';
+          return throwError(errorMessage);
+        })
       );
   }
 

@@ -21,7 +21,7 @@
       Eventos
     </button>
     <button *ngIf="logged" mat-button class="navbar-button" style="color: whitesmoke;"
-      routerLink="/hermanos" routerLinkActive="active-button">
+       [routerLink]="['/hermanos/', userId]" routerLinkActive="active-button">
       Perfil
     </button>
     <button *ngIf="!logged" mat-button class="navbar-button" style="color: whitesmoke;"

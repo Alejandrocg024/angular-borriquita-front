@@ -8,6 +8,8 @@ import esLocale from '@fullcalendar/core/locales/es';
 import { EventsService } from '../../services/events.service';
 import { EventPageComponent } from '../event-page/event-page.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../../../auth/services/auth.service';
+import { User, Role } from '../../../auth/interfaces';
 
 @Component({
   selector: 'event-calendar',
@@ -47,12 +49,17 @@ export class CalendarComponent implements OnInit{
   });
   currentEvents = signal<EventApi[]>([]);
 
+  public user: User | null = null;
+  public Role = Role;
+
   constructor(private changeDetector: ChangeDetectorRef,
     private eventsService: EventsService,
+    private authService: AuthService,
     public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
+    this.user = this.authService.currentUser();
     this.loadEvents();
   }
 
@@ -66,10 +73,19 @@ export class CalendarComponent implements OnInit{
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
+    if(!(this.user!.role === Role.Admin || this.user!.role === Role.Comm)) return;
+
     const calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect(); // clear date selection
     console.log(selectInfo);
+
+    const dialogRef = this.dialog.open(EventPageComponent, {
+      data: { selectInfo }});
+
+    dialogRef.componentInstance.eventUpdated.subscribe(() => {
+      this.loadEvents();
+    });
     // calendarApi.addEvent({
     //   id: '19',
     //   title,
@@ -93,7 +109,9 @@ export class CalendarComponent implements OnInit{
     //   clickInfo.event.remove();
     // }
     const dialogRef = this.dialog.open(EventPageComponent, {
-      data: clickInfo.event.id
+      data: {
+        id: clickInfo.event.id
+      }
     });
 
     dialogRef.componentInstance.eventUpdated.subscribe(() => {

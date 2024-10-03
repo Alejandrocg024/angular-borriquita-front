@@ -8,6 +8,12 @@ import { SharedModule } from '../shared/shared.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeLayoutPageComponent } from './layouts/home-layout-page/home-layout-page.component';
+import { DomingoComponent } from './components/domingo/domingo.component';
+import { NewsComponent } from './components/news/news.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AnnouncementsModule } from '../announcements/announcements.module';
+import { CardComponent } from './components/card/card.component';
 
 
 
@@ -17,7 +23,11 @@ import { HomeLayoutPageComponent } from './layouts/home-layout-page/home-layout-
     HomeLayoutPageComponent,
     HomePageComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    DomingoComponent,
+    NewsComponent,
+    ContactComponent,
+    CardComponent
 
   ],
   imports: [
@@ -25,6 +35,7 @@ import { HomeLayoutPageComponent } from './layouts/home-layout-page/home-layout-
     HomeRoutingModule,
     MaterialModule,
     SharedModule,
+    ReactiveFormsModule
   ],
   exports: [
     NavbarComponent,

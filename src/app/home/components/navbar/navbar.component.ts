@@ -12,6 +12,7 @@ export class NavbarComponent {
   private authService = inject( AuthService );
 
   public logged: boolean = false;
+  public userId: string | null = null;
 
 
   public authStatusChangedEffect = effect(() => {
@@ -23,6 +24,8 @@ export class NavbarComponent {
 
       case AuthStatus.authenticated:{
         this.logged = true;
+        this.userId = this.authService.currentUser()!.id;
+        console.log(this.userId);
         return;
       }
 

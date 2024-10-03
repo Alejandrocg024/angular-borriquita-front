@@ -1,0 +1,14 @@
+<h1 style="color: white;">
+
+  Últimas noticias
+</h1>
+
+<mat-divider></mat-divider>
+
+<div *ngIf="announcements" class="grid bm-8 pt-2">
+  <div *ngFor="let ann of announcements" class="col-12 sm:col-12 md:col-6 xl:col-4">
+    <div class="p-3">
+      <home-card-component [announcement]="ann"></home-card-component>
+    </div>
+  </div>
+</div>

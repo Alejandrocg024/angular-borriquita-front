@@ -1,0 +1,59 @@
+<div class="flex" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+  <h1 class="col-4" style="flex: 1;">Listado de Usuarios</h1>
+</div>
+
+<mat-divider></mat-divider>
+
+<ng-template #divLoading>
+  <div class="flex pt-5 justify-content-center h-screen">
+
+    <mat-spinner></mat-spinner>
+  </div>
+
+</ng-template>
+
+<div *ngIf="users; else divLoading">
+  <mat-form-field>
+    <mat-label>Filtrar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Valor a buscar" #input>
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="dni">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> DNI </th>
+        <td mat-cell *matCellDef="let row"> {{row.dni}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastname">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
+        <td mat-cell *matCellDef="let row"> {{row.lastname}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo Electrónico </th>
+        <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectUser(row)"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No se encuentran datos con los valores "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Selecciona la página de usuarios"></mat-paginator>
+  </div>
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center;">
+  <profile-user-component *ngIf="user" [user]="user" (closed)="onUserClosed()"></profile-user-component>
+</div>

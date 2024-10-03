@@ -34,7 +34,7 @@
     </div>
   </mat-card-content>
   <mat-card-actions style="margin: auto;">
-    <button mat-button color="primary" (click)="onNewEvent()">
+    <button mat-button color="primary" mat-button *ngIf="user?.role === Role.Admin || user?.role === Role.Comm"  (click)="onNewEvent()">
       <mat-icon>add</mat-icon>
       <span>Crear Evento</span>
     </button>

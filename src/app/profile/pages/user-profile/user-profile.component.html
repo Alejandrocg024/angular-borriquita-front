@@ -1,0 +1,104 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" autocomplete="off">
+  <mat-card style="margin: auto; margin-top: 10vh;">
+
+    <mat-card-header>
+      <h1>Perfil de Hermano</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="flex flex-column rows">
+        <mat-form-field>
+          <mat-label>DNI</mat-label>
+          <input type="text" matInput  required formControlName="dni" placeholder="12345678Z">
+          <mat-error *ngIf="userForm.get('dni')?.hasError('required')">El DNI es
+            <strong>requerido</strong>.</mat-error>
+          <mat-error *ngIf="userForm.get('dni')?.hasError('pattern')">Por favor, introduce un DNI
+            válido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Nombre</mat-label>
+          <input type="text" matInput required formControlName="name" placeholder="Nombre">
+          <mat-error *ngIf="userForm.get('name')?.hasError('required')">El DNI es
+            <strong>requerido</strong>.</mat-error>
+          <mat-error *ngIf="userForm.get('name')?.hasError('minlength')">El nombre es demasiado corto</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Apellidos</mat-label>
+          <input type="text" matInput required formControlName="lastname" placeholder="Apellidos">
+          <mat-error *ngIf="userForm.get('lastname')?.hasError('required')">El apellido es
+            <strong>requerido</strong>.</mat-error>
+          <mat-error *ngIf="userForm.get('lastname')?.hasError('minlength')">El apellido es demasiado corto</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password"
+            [value]="isEditingPassword ? '': '******'" required formControlName="password"
+            [readonly]="!isEditingPassword" placeholder="******">
+
+          <!-- Botón para alternar entre modo de edición y solo lectura -->
+          <button mat-icon-button matSuffix (click)="togglePasswordEdit()" type="button">
+            <mat-icon>{{ isEditingPassword ? 'close' : 'edit' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="userForm.get('password')?.hasError('required')">La contraseña es
+            <strong>requerida</strong>.</mat-error>
+          <mat-error *ngIf="userForm.get('password')?.hasError('minlength')">La contraseña debe tener 6
+            caracteres</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de nacimiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Fecha de nacimiento">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="userForm.get('birthDate')?.hasError('required')">La fecha de nacimiento es
+            <strong>requerida</strong>.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Correo electrónico</mat-label>
+          <input type="email" matInput required formControlName="email" placeholder="Correo electrónico">
+          <mat-error *ngIf="userForm.get('email')?.hasError('required')">El correo es
+            <strong>requerido</strong>.</mat-error>
+          <mat-error *ngIf="userForm.get('email')?.hasError('pattern')">El correo no es válido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Dirección</mat-label>
+          <input type="text" matInput formControlName="address" placeholder="Dirección">
+        </mat-form-field>
+
+        <mat-form-field *ngIf="hasAllPermission">
+          <mat-label>¿Miembro de la Junta de Gobierno?</mat-label>
+          <mat-select formControlName="role">
+            <mat-option *ngFor="let rol of roles" [value]="rol.value">
+              {{ rol.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-error *ngIf="serverErrors" class="server-error">
+          <span>{{ serverErrors }}</span>
+        </mat-error>
+
+      </div>
+
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div class="flex justify-content-around" style="margin: auto; width: 100%;">
+        <button mat-fab extended type="submit" color="primary">
+          <mat-icon>save</mat-icon>
+          Guardar cambios
+        </button>
+        <button mat-fab extended color="warn" *ngIf="hasAllPermission" (click)="onDelete()" class="p-ml-3">
+          <mat-icon>disabled_by_default</mat-icon>
+          Dar de baja</button>
+      </div>
+
+    </mat-card-actions>
+
+  </mat-card>
+</form>

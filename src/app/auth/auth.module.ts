@@ -5,6 +5,8 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
 import { AuthRoutingModule } from './auth-routing.module';
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
+import { MY_DATE_FORMATS } from '../event/interfaces/dateFormats';
 
 
 
@@ -18,6 +20,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     AuthRoutingModule,
     MaterialModule,
     ReactiveFormsModule
-  ]
+  ],
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ],
 })
 export class AuthModule { }

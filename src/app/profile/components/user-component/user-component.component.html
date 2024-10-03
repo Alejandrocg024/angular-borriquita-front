@@ -1,0 +1,35 @@
+<mat-card class="user-card p-3">
+  <mat-card-header>
+    <button mat-icon-button color="warn" class="close-button" (click)="onClose()">
+      <mat-icon color="warn">close</mat-icon>  <!-- Ícono de una cruz -->
+    </button>
+    <mat-card-title>{{ user.name }} {{ user.lastname }}</mat-card-title>
+    <mat-card-subtitle *ngIf="user.role">{{ user.role }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="user-info">
+      <p><strong>DNI:</strong> {{ user.dni }}</p>
+      <div *ngIf="user.outDate" class="flex">
+        <mat-chip color="warn">
+          Usuario dado de baja
+        </mat-chip>
+      </div>
+      <p><strong>Fecha de nacimiento:</strong> {{ user.birthDate | date }}</p>
+      <p><strong>Email:</strong> {{ user.email }}
+        <span *ngIf="user.emailValidated" class="validated">(Validado)</span>
+        <span *ngIf="!user.emailValidated" class="not-validated">(No validado)</span>
+      </p>
+      <p><strong>Fecha de ingreso:</strong> {{ user.admissionDate | date }}</p>
+      <p *ngIf="user.outDate"><strong>Fecha de salida:</strong> {{ user.outDate | date }}</p>
+      <p *ngIf="user.address"><strong>Dirección:</strong> {{ user.address }}</p>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions class="flex justify-content-around" style="margin: auto;">
+    <button mat-button color="primary" [routerLink]="['./editar/', this.user.id]">
+      <mat-icon>edit</mat-icon>
+      Editar
+    </button>
+  </mat-card-actions>
+</mat-card>

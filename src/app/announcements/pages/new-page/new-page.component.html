@@ -30,6 +30,8 @@
           <mat-form-field class="col-12">
             <mat-label>Título</mat-label>
             <input matInput type="text" required formControlName="title" />
+            <mat-error *ngIf="announcementForm.get('title')?.hasError('required')">El título es <strong>requerido</strong>.</mat-error>
+            <mat-error *ngIf="announcementForm.get('title')?.hasError('minlength')">El título es demasiado corto</mat-error>
           </mat-form-field>
 
 
@@ -37,6 +39,8 @@
           <mat-form-field class="col-12">
             <mat-label>Cuerpo de la noticia</mat-label>
             <textarea matInput required rows="5" formControlName="body"></textarea>
+            <mat-error *ngIf="announcementForm.get('body')?.hasError('required')">El cuerpo es <strong>requerido</strong>.</mat-error>
+            <mat-error *ngIf="announcementForm.get('body')?.hasError('minlength')">El cuerpo es demasiado corto</mat-error>
           </mat-form-field>
 
           <div class="col-12 flex">
@@ -52,6 +56,9 @@
 
             <mat-label class="text-2xl pr-5">¿Noticia ya disponible?</mat-label>
             <mat-slide-toggle formControlName="available" style="transform: scale(1.5);"></mat-slide-toggle>
+            <mat-error *ngIf="serverErrors" class="server-error">
+              <span>{{ serverErrors }}</span>
+            </mat-error>
 
           </div>
         </form>

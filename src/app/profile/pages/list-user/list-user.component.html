@@ -1,0 +1,68 @@
+<ng-template #divLoading>
+  <div class="flex pt-5 justify-content-center h-screen">
+    <mat-spinner></mat-spinner>
+  </div>
+
+</ng-template>
+
+
+<div *ngIf="user; else divLoading" class="grid p-2 gap-4">
+
+  <mat-card class="col-12">
+    <mat-card-header>
+      <mat-card-title>
+        <h1>{{ user.name }} {{user.lastname}}</h1>
+        <!-- Mat chip con el rol -->
+        <mat-chip *ngIf="user.role == 'ADMIN_ROLE'" color="primary">
+          ADMINISTRADOR
+        </mat-chip>
+        <mat-chip *ngIf="user.role == 'COMUNICACIONES_ROLE'" color="primary">
+          MIEMBRO DE LA JUNTA DE GOBIERNO - COMUNICACIÓN
+        </mat-chip>
+        <mat-chip *ngIf="user.role == 'MAYORDOMIA_ROLE'" color="primary">
+          MIEMBRO DE LA JUNTA DE GOBIERNO - MAYORDOMO
+        </mat-chip>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p style="grid: 5px;">
+
+        <strong>DNI:</strong> {{ user.dni }}
+        <mat-divider></mat-divider>
+        <br>
+        <strong>Fecha de nacimiento:</strong> {{ user.birthDate | date: 'dd/MM/yyyy' }}
+        <mat-divider></mat-divider>
+        <br>
+        <strong>Correo electrónico:</strong> {{ user.email }}
+        <mat-divider></mat-divider>
+        <br>
+        <strong>Fecha de admisión:</strong> {{ user.admissionDate | date: 'dd/MM/yyyy' }}
+        <mat-divider></mat-divider>
+        <br>
+        <strong>DNI:</strong> {{ user.dni }}
+        <mat-divider></mat-divider>
+        <br>
+        <span *ngIf="user.address">
+          <strong>Dirección:</strong> {{ user.address }}
+          <mat-divider></mat-divider>
+          <br>
+        </span>
+
+
+      </p>
+
+    </mat-card-content>
+    <mat-card-footer class="p-2">
+      <span class="flex  justify-content-center gap-4">
+        <button mat-raised-button [routerLink]="['../editar/', this.user.id]" color="primary">
+          <mat-icon>edit</mat-icon>
+          Editar
+        </button>
+        <button *ngIf="user.role == 'ADMIN_ROLE' || user.role == 'COMUNICACIONES_ROLE'" mat-raised-button [routerLink]="['..',]" color="primary">
+          <mat-icon>admin_panel_settings</mat-icon>
+          Administración
+        </button>
+      </span>
+    </mat-card-footer>
+  </mat-card>
+</div>
