@@ -1,3 +1,4 @@
+import { loadStripe } from '@stripe/stripe-js';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environments } from '../../../enviroments/enviroments';
@@ -48,9 +49,10 @@ export class PaysService {
     );
   }
 
-  register( pay: Pay ): Observable<Pay> {
+  register(pay: Pay): Observable<Pay> {
+    console.log('pay', pay);
     const token = localStorage.getItem('token');
-    return this.http.post<Pay>(`${this.baseUrl}/pay`, pay , {
+    return this.http.post<Pay>(`${this.baseUrl}/pay`, pay, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`
       })
@@ -62,20 +64,40 @@ export class PaysService {
     );
   }
 
-  update(pay: Pay ): Observable<Pay> {
+  update(pay: Pay) {
     const token = localStorage.getItem('token');
     if (!pay.id) throw Error('Se requiere un id para actualizar un pago');
 
-    return this.http.put<Pay>(`${this.baseUrl}/pay/${pay.id}`, pay, {
+    return this.http.put(`${this.baseUrl}/pay/${pay.id}`, pay, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`
       })
     }).pipe(
-      catchError(error => {
-        const errorMessage = error.error.error || 'Error desconocido';
-        return throwError(errorMessage);
+      map(async (res: any) => {
+        const stripe = await loadStripe(environments.stripeAPIKey);
+        const { id } = res;
+        const result = await stripe?.redirectToCheckout({ sessionId: id });
+
+        if (result?.error) {
+          console.error(result.error.message);
+          return;
+        }
       })
+    ).subscribe({
+      error: (error) => console.error('Error:', error)
+    });
+  }
+
+  payCard(confirmToken: string) {
+    const token = localStorage.getItem('token');
+    return this.http.get<Pay>(`${this.baseUrl}/pay/accept/${confirmToken}`, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      })
+    }).pipe(
+      catchError(error => of(undefined))
     );
   }
+
 
 }

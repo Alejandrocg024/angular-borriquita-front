@@ -3,7 +3,7 @@
     <mat-card-title>{{ announcement.title }}</mat-card-title>
   </mat-card-header> -->
 
-  <img mat-card-image [src]="announcement.media" [alt]="announcement.title">
+  <img *ngIf="announcement.media" mat-card-image [src]="announcement.media" [alt]="announcement.title">
 
   <mat-card-content class="mt-2">
     <h4>{{ announcement.title }}</h4>

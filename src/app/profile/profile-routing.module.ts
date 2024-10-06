@@ -6,6 +6,7 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
 import { isMayGuard } from '../auth/guards/is-may.guard';
 import { ListUserComponent } from './pages/list-user/list-user.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
+import { ConfirmPayComponent } from './pages/confirm-pay/confirm-pay.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: '', canActivate: [isMayGuard], component: AdminPanelComponent },
       { path: ':id', component: ListUserComponent },
       { path: 'editar/:id', component: UserProfileComponent },
+      { path: 'aceptar/:token', component: ConfirmPayComponent },
       { path: '**', redirectTo: '' },
     ]
   }

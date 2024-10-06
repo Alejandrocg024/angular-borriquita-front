@@ -1,3 +1,4 @@
+import { User } from "../../auth/interfaces";
 
 export interface Pay {
         id: string,
@@ -9,6 +10,18 @@ export interface Pay {
         state: PayState,
         payMethod?: PayMethod,
 }
+
+export interface PayUser {
+  id: string,
+  user: User,
+  concept: string,
+  quantity: number,
+  startDate: Date,
+  finishDate: Date,
+  state: PayState,
+  payMethod?: PayMethod,
+}
+
 
 export enum PayState {
   Pending = 'PENDING',

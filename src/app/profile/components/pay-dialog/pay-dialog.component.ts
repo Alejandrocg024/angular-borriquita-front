@@ -1,8 +1,11 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PaysService } from '../../services/pays.service';
+import { User } from '../../../auth/interfaces';
+import { UserService } from '../../services/user.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-pay-dialog',
@@ -10,7 +13,7 @@ import { PaysService } from '../../services/pays.service';
   styleUrl: './pay-dialog.component.css',
   providers: [provideNativeDateAdapter()],
 })
-export class PayDialogComponent {
+export class PayDialogComponent implements OnInit {
 
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef);
@@ -18,14 +21,50 @@ export class PayDialogComponent {
 
   public serverErrors: string | null = null;
 
+  public searchInput = new FormControl('');
+  public users: User[] = [];
+  public selectedUser?: User;
+
   public payForm: FormGroup = this.fb.group({
-    user: ['66fb12bd025f63b8e0d760d0', Validators.required],
+    userPayer: [''],
     concept: ['fff', Validators.required],
     quantity: [10.56, [Validators.required, Validators.min(1)]],
     startDate: ['', Validators.required],
     finishDate: ['', Validators.required],
     state: ['PENDING', Validators.required],
   });
+
+  private userService = inject(UserService);
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  ngOnInit(): void {
+    if (this.data.all){
+      this.searchInput.disable();
+    }
+  }
+
+  searchUser() {
+    const value: string = this.searchInput.value || '';
+
+    this.userService.getSuggestions( value )
+      .subscribe( users => this.users = users );
+  }
+
+
+  onSelectedOption( event: MatAutocompleteSelectedEvent ): void {
+    if ( !event.option.value ) {
+      this.selectedUser = undefined;
+      return;
+    }
+
+    const user: User = event.option.value;
+    const fullname = `${user.name} ${user.lastname}`;
+    this.searchInput.setValue( fullname );
+
+    this.payForm.get('userPayer')?.setValue( user.id );
+  }
+
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -47,5 +86,6 @@ export class PayDialogComponent {
           console.log('Errores del servidor:', this.serverErrors);
         }
       })
+
   }
 }

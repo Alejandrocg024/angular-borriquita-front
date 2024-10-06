@@ -58,7 +58,7 @@
           <mat-icon>edit</mat-icon>
           Editar
         </button>
-        <button *ngIf="user.role == 'ADMIN_ROLE' || user.role == 'COMUNICACIONES_ROLE'" mat-raised-button [routerLink]="['..',]" color="primary">
+        <button *ngIf="user.role == 'ADMIN_ROLE' || user.role == 'MAYORDOMIA_ROLE'" mat-raised-button [routerLink]="['..',]" color="primary">
           <mat-icon>admin_panel_settings</mat-icon>
           Administración
         </button>
@@ -66,3 +66,5 @@
     </mat-card-footer>
   </mat-card>
 </div>
+
+<profile-my-list-pay></profile-my-list-pay>

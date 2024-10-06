@@ -17,6 +17,8 @@ import { PayComponentComponent } from './components/pay-component/pay-component.
 import { PayDialogComponent } from './components/pay-dialog/pay-dialog.component';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MY_DATE_FORMATS } from '../event/interfaces/dateFormats';
+import { ConfirmPayComponent } from './pages/confirm-pay/confirm-pay.component';
+import { MyListPayComponent } from './components/my-list-pay/my-list-pay.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { MY_DATE_FORMATS } from '../event/interfaces/dateFormats';
     AdminPanelComponent,
     ListPayComponent,
     PayComponentComponent,
-    PayDialogComponent
+    PayDialogComponent,
+    ConfirmPayComponent,
+    MyListPayComponent
   ],
   imports: [
     CommonModule,

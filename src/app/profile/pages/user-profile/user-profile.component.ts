@@ -78,6 +78,8 @@ export class UserProfileComponent implements OnInit {
       this.userForm.get('lastname')!.disable();
       this.userForm.get('birthDate')!.disable();
       this.userForm.get('role')!.disable();
+    } else if(!(me?.role === Role.Admin)){
+      this.userForm.get('role')!.disable();
     }
 
   }

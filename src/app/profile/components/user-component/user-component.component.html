@@ -9,12 +9,12 @@
 
   <mat-card-content>
     <div class="user-info">
-      <p><strong>DNI:</strong> {{ user.dni }}</p>
       <div *ngIf="user.outDate" class="flex">
-        <mat-chip color="warn">
+        <div class="canceled">
           Usuario dado de baja
-        </mat-chip>
+        </div>
       </div>
+      <p><strong>DNI:</strong> {{ user.dni }}</p>
       <p><strong>Fecha de nacimiento:</strong> {{ user.birthDate | date }}</p>
       <p><strong>Email:</strong> {{ user.email }}
         <span *ngIf="user.emailValidated" class="validated">(Validado)</span>

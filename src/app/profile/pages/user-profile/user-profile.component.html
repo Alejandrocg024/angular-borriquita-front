@@ -79,6 +79,10 @@
           </mat-select>
         </mat-form-field>
 
+        <div *ngIf="!hasAllPermission" style="color: #A9A9A9; ">
+          <p>Si detecta algún error en los campos bloqueados, contacta con la hermandad.</p>
+        </div>
+
         <mat-error *ngIf="serverErrors" class="server-error">
           <span>{{ serverErrors }}</span>
         </mat-error>

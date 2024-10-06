@@ -22,10 +22,14 @@
     </div>
   </mat-card-content>
 
-  <mat-card-actions *ngIf="pay.state != 'CANCELLED'" class="flex justify-content-around" style="margin: auto;">
+  <mat-card-actions *ngIf="pay.state == 'PENDING'" class="flex justify-content-around" style="margin: auto;">
     <button mat-button color="primary"  (click)="onCancel()">
       <mat-icon>cancel</mat-icon>
       Cancelar
+    </button>
+    <button mat-button color="primary" *ngIf="myPay"  (click)="onPay()">
+      <mat-icon>money</mat-icon>
+      Pagar
     </button>
   </mat-card-actions>
 </mat-card>

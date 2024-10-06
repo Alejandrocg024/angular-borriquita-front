@@ -2,38 +2,29 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environments } from '../../../enviroments/enviroments';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { User } from '../../auth/interfaces';
-import { GetUsersResponse } from '../interfaces/users-response.interface';
+import { Answer, GetRequestFormsResponse, RequestForm } from '../interfaces/request-form.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class RequestFormService {
   private baseUrl: string = environments.baseUrl;
 
 
   constructor(private http: HttpClient) { }
 
 
-  getUsers(): Observable<User[]> {
-    return this.http.get<GetUsersResponse>(`${this.baseUrl}/user?limit=100`)
+  getRequestForm(): Observable<RequestForm[]> {
+    return this.http.get<GetRequestFormsResponse>(`${this.baseUrl}/requestForm`)
       .pipe(
-        map(response => response.users),
+        map(response => response.requestForms),
         catchError(error => of([]))
       );
   }
 
-  getSuggestions( query: string ): Observable<User[]> {
-    return this.http.get<GetUsersResponse>(`${ this.baseUrl }/user?q=${ query }&_limit=6`)
-      .pipe(
-        map(response => response.users),
-        catchError(error => of([]))
-      );
-  }
-
-  getUserById(id: string): Observable<User | undefined> {
+  getRequestFormsById(id: string): Observable<RequestForm | undefined> {
     const token = localStorage.getItem('token');
-    return this.http.get<User>(`${this.baseUrl}/user/${id}`, {
+    return this.http.get<RequestForm>(`${this.baseUrl}/requestForm/${id}`, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`
       })
@@ -42,11 +33,9 @@ export class UserService {
     );
   }
 
-  updateUser(user: User): Observable<User> {
+  create( rf: RequestForm ): Observable<RequestForm> {
     const token = localStorage.getItem('token');
-    if (!user.id) throw Error('Se requiere un id para actualizar un usuario');
-
-    return this.http.put<User>(`${this.baseUrl}/user/update/${user.dni}`, user, {
+    return this.http.post<RequestForm>(`${this.baseUrl}/requestForm`, rf , {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`
       })
@@ -58,9 +47,9 @@ export class UserService {
     );
   }
 
-  deleteUser(id: string): Observable<void> {
+  createAnswer( answer: Answer ): Observable<RequestForm> {
     const token = localStorage.getItem('token');
-    return this.http.delete<void>(`${this.baseUrl}/user/delete/${id}`, {
+    return this.http.post<RequestForm>(`${this.baseUrl}/requestForm/${answer.requestId}`, answer , {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`
       })
@@ -71,4 +60,6 @@ export class UserService {
       })
     );
   }
+
+
 }

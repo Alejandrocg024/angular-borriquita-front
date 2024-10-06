@@ -16,12 +16,14 @@
         </mat-card-header>
 
         <mat-card-content class="text-center">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/600px-Instagram_logo_2022.svg.png" alt="Facebook Logo" class="logo mx-auto my-4">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/600px-Instagram_logo_2022.svg.png"
+            alt="Facebook Logo" class="logo mx-auto my-4">
         </mat-card-content>
 
         <mat-card-actions>
           <div class="flex justify-content-center text-center accessButton p-2">
-            <a mat-raised-button color="primary" href="https://www.instagram.com/hdadborriquita/" target="_blank" >
+            <a mat-raised-button color="primary" href="https://www.instagram.com/hdadborriquita/" target="_blank">
               hdadBorriquita
             </a>
           </div>
@@ -38,11 +40,12 @@
         </mat-card-header>
 
         <mat-card-content class="text-center">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo" class="logo mx-auto my-4">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+            alt="Facebook Logo" class="logo mx-auto my-4">
         </mat-card-content>
 
         <mat-card-actions>
-          <div class="flex justify-content-center text-center accessButton p-2" >
+          <div class="flex justify-content-center text-center accessButton p-2">
             <a mat-raised-button color="primary" href="https://facebook.com/hermandad.borriquita" target="_blank">
               Hermandad Borriquita
             </a>
@@ -60,7 +63,8 @@
         </mat-card-header>
 
         <mat-card-content class="text-center">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/X_logo_2023.svg/300px-X_logo_2023.svg.png" alt="X Logo" class="logo mx-auto my-4">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/X_logo_2023.svg/300px-X_logo_2023.svg.png"
+            alt="X Logo" class="logo mx-auto my-4">
         </mat-card-content>
 
         <mat-card-actions>
@@ -81,47 +85,60 @@
     <div class="col-12 mx-auto">
       <mat-card>
         <mat-card-header>
-          <mat-card-title class="text-center">
-            <h1 class="text-2xl sm:text-3xl font-medium mb-4">Contáctanos</h1>
-          </mat-card-title>
-          <mat-card-subtitle class="text-center">
-            <p class="text-base">Envíanos la duda que desees y en el menor tiempo la respondemos.</p>
-          </mat-card-subtitle>
+          <div class="relative w-full">
+            <mat-card-title class="text-center">
+              <h1 class="text-2xl sm:text-3xl font-medium mb-2">Contáctanos</h1>
+            </mat-card-title>
+
+            <mat-card-subtitle class="text-center">
+              <p class="text-base">Envíanos la duda que desees y en el menor tiempo la respondemos.</p>
+            </mat-card-subtitle>
+
+            <button mat-icon-button class="absolute right-0 top-0" (click)="toggleContentVisibility()">
+              <mat-icon>{{ isContentVisible ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </button>
+          </div>
         </mat-card-header>
 
-        <mat-card-content>
+        <mat-card-content *ngIf="isContentVisible">
           <form [formGroup]="contactForm" class="p-fluid">
             <div class="grid formgrid">
-              <div class="col-12 md:col-6 p-2">
-                <mat-form-field appearance="outline" class="w-full">
-                  <mat-label>Name</mat-label>
-                  <input matInput formControlName="name" placeholder="Enter your name">
-                </mat-form-field>
-              </div>
-              <div class="col-12 md:col-6 p-2">
+              <div class="col-12 p-2">
                 <mat-form-field appearance="outline" class="w-full">
                   <mat-label>Email</mat-label>
-                  <input matInput formControlName="email" placeholder="Enter your email" type="email">
+                  <input matInput formControlName="email" placeholder="Introduce tu correo" type="email">
+                  <mat-error *ngIf="contactForm.get('email')?.hasError('required')">El correo es <strong>requerido</strong>.</mat-error>
+                  <mat-error *ngIf="contactForm.get('email')?.hasError('pattern')">El correo no es válido.</mat-error>
                 </mat-form-field>
               </div>
               <div class="col-12 p-2">
                 <mat-form-field appearance="outline" class="w-full">
-                  <mat-label>Message</mat-label>
-                  <textarea matInput formControlName="message" placeholder="Enter your message" rows="5"></textarea>
+                  <mat-label>Detalles</mat-label>
+                  <textarea matInput formControlName="details" placeholder="Introduce tu consulta" rows="5"></textarea>
+                  <mat-error *ngIf="contactForm.get('details')?.hasError('required')">Los detalles son <strong>requeridos</strong>.</mat-error>
+                  <mat-error *ngIf="contactForm.get('details')?.hasError('minlength')">Los detalles son demasiado cortos.</mat-error>
                 </mat-form-field>
               </div>
             </div>
-          </form>
-        </mat-card-content>
 
-        <mat-card-actions>
-          <div class="flex justify-content-center text-center accessButton p-2" >
-            <button mat-raised-button color="primary" href="https://facebook.com/hermandad.borriquita" target="_blank">
-              Enviar
-            </button>
-          </div>
-        </mat-card-actions>
+            <mat-error *ngIf="serverErrors" class="server-error">
+              <span>{{ serverErrors }}</span>
+            </mat-error>
+          </form>
+
+
+
+          <mat-card-actions>
+            <div class="flex justify-content-center text-center accessButton p-2">
+              <button mat-fab extended type="submit" color="primary" (click)="onSubmit()">
+                Enviar
+              </button>
+            </div>
+          </mat-card-actions>
+        </mat-card-content>
       </mat-card>
+
+
     </div>
   </div>
 </section>

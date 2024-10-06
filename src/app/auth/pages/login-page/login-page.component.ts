@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { ValidatorsService } from '../../../shared/service/validators.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login-page',
@@ -12,11 +13,13 @@ import { ValidatorsService } from '../../../shared/service/validators.service';
 export class LoginPageComponent {
 
   public serverErrors: string | null = null;
+  public haveToPay: boolean = false;
 
   private fb          = inject( FormBuilder );
   private authService = inject( AuthService );
   private router      = inject( Router );
   private validatorsService = inject( ValidatorsService );
+  private snackbar = inject( MatSnackBar );
 
 
   public myForm: FormGroup = this.fb.group({
@@ -35,12 +38,14 @@ export class LoginPageComponent {
       .subscribe({
         next: () => this.router.navigateByUrl('/profile'),
         error: (message) => {
+          if( message = 'Tienes cuotas pendientes de pago'){
+            this.haveToPay = true;
+          }
           this.serverErrors = message;
           console.log('Errores del servidor:', this.serverErrors);
         }
       })
 
   }
-
 
 }

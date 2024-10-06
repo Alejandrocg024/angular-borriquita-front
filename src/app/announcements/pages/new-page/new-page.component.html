@@ -17,7 +17,7 @@
     <mat-spinner></mat-spinner>
   </div>
 
-  <div *ngIf="currentAnnouncement.media" class="div-image col-12 p-0">
+  <div *ngIf="currentAnnouncement.media && !loading" class="div-image col-12 p-0">
     <img mat-card-image class="image" (click)="openFullScreen()" [src]="currentAnnouncement.media"
       [alt]="currentAnnouncement.title">
   </div>
@@ -65,7 +65,7 @@
 
         <p style="text-align: justify; line-height: 1.5;"></p>
         <span class="flex justify-content-around">
-          <button mat-raised-button (click)="onDeleteHero()" color="warn">
+          <button  mat-raised-button *ngIf="this.currentAnnouncement.id" (click)="onDeleteHero()" color="warn">
             <mat-icon>delete</mat-icon>
             Borrar
           </button>

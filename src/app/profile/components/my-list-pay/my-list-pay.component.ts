@@ -9,14 +9,15 @@ import { catchError, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { PayDialogComponent } from '../pay-dialog/pay-dialog.component';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
-  selector: 'profile-list-pay',
-  templateUrl: './list-pay.component.html',
-  styleUrl: './list-pay.component.css'
+  selector: 'profile-my-list-pay',
+  templateUrl: './my-list-pay.component.html',
+  styleUrl: './my-list-pay.component.css'
 })
-export class ListPayComponent implements AfterViewInit  {
-  displayedColumns: string[] = ['dni', 'concept', 'quantity', 'state'];
+export class MyListPayComponent implements AfterViewInit  {
+  displayedColumns: string[] = ['concept', 'state', 'finishDate', 'quantity'];
   dataSource!: MatTableDataSource<Pay>;
 
   public pays: Pay[] = [];
@@ -28,7 +29,7 @@ export class ListPayComponent implements AfterViewInit  {
 
   paysService = inject( PaysService );
   router = inject( Router );
-  userService = inject( UserService );
+  authService = inject( AuthService );
 
   ngAfterViewInit() {
     this.paysService.getPays()
@@ -40,13 +41,8 @@ export class ListPayComponent implements AfterViewInit  {
     )
     .subscribe(
       response => {
-
-        for (const pay of response!) {
-          this.userService.getUserById(pay.user).subscribe(user => {
-            pay.user = user!.name + ' ' + user!.lastname;
-          });
-        }
-        this.pays = response!
+        this.authService.currentUser()?.id;
+        this.pays = response!.filter(pay => pay.user === this.authService.currentUser()?.id);
         this.dataSource = new MatTableDataSource(this.pays);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

@@ -1,9 +1,10 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, inject, Input, OnInit, Output } from '@angular/core';
 import { User } from '../../../auth/interfaces';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { Pay, PayMethod, PayState } from '../../interfaces/pay.interface';
 import { PaysService } from '../../services/pays.service';
+import { AuthService } from '../../../auth/services/auth.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class PayComponentComponent implements OnInit {
   public pay!: Pay;
   public user!: User;
   @Output() closed = new EventEmitter<void>();
+  public myPay= false;
 
   public states = [
     { value: PayState.Pending, label: 'Pendiente' },
@@ -31,6 +33,7 @@ export class PayComponentComponent implements OnInit {
   router = inject( Router );
   userService = inject( UserService );
   paysService = inject( PaysService );
+  authService = inject( AuthService );
 
   ngOnInit(): void {
     this.loadData();
@@ -40,6 +43,7 @@ export class PayComponentComponent implements OnInit {
     this.paysService.getPayById(this.payId).subscribe(pay => {
       this.pay = pay!;
       this.user = pay!.user as unknown as User;
+      this.myPay = this.authService.currentUser()?.id === this.user.id;
     });
   }
 
@@ -71,6 +75,11 @@ export class PayComponentComponent implements OnInit {
 
   onClose() {
     this.closed.emit();
+  }
+
+  onPay(){
+    console.log(this.pay);
+    this.paysService.update(this.pay)
   }
 
   onCancel() {

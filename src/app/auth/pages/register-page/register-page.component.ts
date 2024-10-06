@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { ValidatorsService } from '../../../shared/service/validators.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class RegisterPageComponent {
   private authService = inject( AuthService );
   private router      = inject( Router );
   private validatorsService = inject( ValidatorsService );
+  private snackbar = inject( MatSnackBar );
 
 
   public registerForm: FormGroup = this.fb.group({
@@ -41,6 +43,12 @@ export class RegisterPageComponent {
     return this.validatorsService.isValidField( this.registerForm, field );
   }
 
+  showSnackbar( message: string ):void {
+    this.snackbar.open( message, 'Cerrar', {
+      duration: 5000,
+    })
+  }
+
   onSubmit() {
     this.registerForm.markAllAsTouched();
 
@@ -50,7 +58,10 @@ export class RegisterPageComponent {
 
     this.authService.register(data)
       .subscribe({
-        next: () => this.router.navigateByUrl('/profile'),
+        next: () => {
+          this.showSnackbar('Usuario registrado correctamente. Para usarlo, valida su correo electrónico.');
+          this.router.navigateByUrl('/auth/login')
+        },
         error: (message: any) => {
           this.serverErrors = message;
           console.log('Errores del servidor:', this.serverErrors);

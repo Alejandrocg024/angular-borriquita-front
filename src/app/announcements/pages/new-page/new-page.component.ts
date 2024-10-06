@@ -120,7 +120,7 @@ export class NewPageComponent implements OnInit {
           this.announcementForm.get('media')?.setValue(response.upload[1]);
       } catch (error) {
         console.error('Error uploading image:', error);
-        this.showSnackbar('Error subiendo la imagen');
+        this.showSnackbar('Error subiendo la imagen, es demasiado grande.');
         return;
       } finally {
         this.loading = false;
