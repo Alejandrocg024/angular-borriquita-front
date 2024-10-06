@@ -97,6 +97,11 @@ export class UserProfileComponent implements OnInit {
 
     const data = this.userForm.value;
 
+        // Si el password es '******' no se envía al servidor, se borra esa propiedad del objeto
+    if(data.password === '******') delete data.password;
+
+    console.log('Data:', data);
+
 
     this.userService.updateUser(data)
       .subscribe({

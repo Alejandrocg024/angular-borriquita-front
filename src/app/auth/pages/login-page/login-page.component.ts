@@ -38,9 +38,10 @@ export class LoginPageComponent {
       .subscribe({
         next: () => this.router.navigateByUrl('/profile'),
         error: (message) => {
-          if( message = 'Tienes cuotas pendientes de pago'){
-            this.haveToPay = true;
-          }
+          // if( message = 'Tienes cuotas pendientes de pago. Contacte con la hermandad.'){
+          //   this.haveToPay = true;
+          // }
+          console.log('Error:', message);
           this.serverErrors = message;
           console.log('Errores del servidor:', this.serverErrors);
         }

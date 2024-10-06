@@ -56,6 +56,7 @@ export class AuthService {
       .pipe(
         map( ({ user, token }) => this.setAuthentication( user, token )),
         catchError(error => {
+          console.log('Error se:', error);
           const errorMessage = error.error.error || 'Error desconocido';
           return throwError(errorMessage);
         })
