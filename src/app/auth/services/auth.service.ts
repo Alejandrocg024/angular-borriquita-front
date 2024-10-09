@@ -2,7 +2,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, map, of, tap, throwError, filter } from 'rxjs';
 
-import { environments } from '../../../enviroments/enviroments';
+import { environments } from '../../../environments/environment';
 import { AuthStatus, CheckTokenResponse, LoginResponse, User } from '../interfaces';
 import { PaysService } from '../../profile/services/pays.service';
 import { Pay, PayState } from '../../profile/interfaces/pay.interface';

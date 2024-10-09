@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environments } from '../../../enviroments/enviroments';
+import { environments } from '../../../environments/environment';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Answer, GetRequestFormsResponse, RequestForm } from '../interfaces/request-form.interface';
 

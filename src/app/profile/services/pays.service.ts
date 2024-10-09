@@ -1,7 +1,7 @@
 import { loadStripe } from '@stripe/stripe-js';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environments } from '../../../enviroments/enviroments';
+import { environments } from '../../../environments/environment';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Pay } from '../interfaces/pay.interface';
 import { GetPaysResponse } from '../interfaces/pays-response.interface';

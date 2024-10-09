@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environments } from '../../../enviroments/enviroments';
+import { environments } from '../../../environments/environment';
 import { Announcement, GetAnnouncementResponse } from '../interfaces/announcement.interface';
 import { catchError, filter, firstValueFrom, map, Observable, of, throwError } from 'rxjs';
 import { UploadResponse } from '../interfaces/upload-response.interface';
