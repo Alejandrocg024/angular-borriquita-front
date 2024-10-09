@@ -25,7 +25,7 @@ export class ContactComponent implements OnInit {
   private authService = inject( AuthService );
 
   public contactForm: FormGroup = this.fb.group({
-    type:    ['', [ Validators.required ]],
+    type:    ['CONSULTA', [ Validators.required ]],
     date:    [new Date(), [ Validators.required ]],
     details: ['', [ Validators.required, Validators.minLength(10) ]],
     email:   ['', [ Validators.required, Validators.pattern(this.validatorsService.emailPattern) ]],
