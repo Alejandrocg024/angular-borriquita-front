@@ -1,0 +1,74 @@
+.datos-interes table {
+  border-spacing: 20px;
+  text-align: justify;
+}
+
+.datos-interes th {
+  text-align: left;
+  width: 18%;
+}
+
+.nazarenos {
+  display: flex;
+  align-items: stretch;
+  margin: 3vh;
+}
+
+.content-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  margin-left: 2vh;
+  border: 0.5px solid var(--primary);
+  border-radius: 20px;
+}
+
+.contenido {
+  align-content: center;
+  padding: 3vh;
+}
+
+.contenido h2 {
+  color: var(--primary);
+  text-align: center;
+  font-weight: bold;
+}
+
+.contenido p {
+  padding-left: 30px;
+  text-align: justify;
+}
+
+
+.recorrido {
+  display: block;
+  align-items: stretch;
+  margin: 3vh;
+}
+
+.itinerario table {
+  text-align: center;
+  border: 1px solid var(--primary);
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.itinerario th,
+.itinerario td {
+  border: 1px solid var(--primary);
+  padding: 8px;
+}
+
+.image2 {
+  width: 100%;
+  height: auto;
+  margin: 3vh;
+  border-radius: 15px;
+  border: 0.5px solid var(--primary);
+}
+

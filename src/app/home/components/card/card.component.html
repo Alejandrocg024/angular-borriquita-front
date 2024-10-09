@@ -1,7 +1,4 @@
 <mat-card>
-  <!-- <mat-card-header>
-    <mat-card-title>{{ announcement.title }}</mat-card-title>
-  </mat-card-header> -->
 
   <img mat-card-image [src]="announcement.media" [alt]="announcement.title">
 
@@ -24,11 +21,11 @@
   <mat-card-actions>
 
     <div class="flex justify-content-around" style="margin: auto;">
-        <button mat-button *ngIf="user?.role === Role.Admin || user?.role === Role.Comm"  mat-raised [routerLink]="['./editar/', this.announcement.id]" color="primary">
+        <button mat-button *ngIf="user?.role === Role.Admin || user?.role === Role.Comm"  mat-raised [routerLink]="['/noticias/editar/', this.announcement.id]" color="primary">
           <mat-icon>edit</mat-icon>
           Editar
         </button>
-        <button mat-button mat-raised [routerLink]="['./', this.announcement.id]">
+        <button mat-button mat-raised [routerLink]="['/noticias', this.announcement.id]">
           <mat-icon>more_horiz</mat-icon>
           Detalles
         </button>

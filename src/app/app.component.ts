@@ -21,25 +21,4 @@ export class AppComponent {
 
     return true;
   });
-
-
-  // public authStatusChangedEffect = effect(() => {
-
-  //   switch( this.authService.authStatus() ) {
-
-  //     case AuthStatus.checking:
-  //       return;
-
-  //     case AuthStatus.authenticated:
-  //       return;
-
-  //     case AuthStatus.notAuthenticated:
-  //       return;
-
-  //   }
-
-
-
-
-  // });
 }

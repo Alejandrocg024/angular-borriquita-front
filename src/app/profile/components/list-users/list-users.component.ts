@@ -67,7 +67,6 @@ export class ListUsersComponent implements AfterViewInit  {
 
   selectUser(row: User) {
     this.user = row;
-    console.log('Usuario seleccionado:', this.user);
   }
 
   onUserClosed() {

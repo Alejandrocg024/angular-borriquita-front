@@ -25,14 +25,14 @@ export class RegisterPageComponent {
 
 
   public registerForm: FormGroup = this.fb.group({
-    dni:    ['12345678Z', [ Validators.required, Validators.pattern(this.validatorsService.dniPattern ) ]],
-    name: ['Alejandro', [ Validators.required, Validators.minLength(3) ]],
-    lastname: ['Campano Galán', [ Validators.required, Validators.minLength(3) ]],
-    password: ['admin123', [ Validators.required, Validators.minLength(6) ]],
-    password2: ['admin123', [ Validators.required, Validators.minLength(6) ]],
-    birthDate: [new Date(), [Validators.required]],
-    email: ['alecamgal1@alum.us.es', [ Validators.required, Validators.pattern(this.validatorsService.emailPattern) ]],
-    address: ['Calle falsa 123'],
+    dni:    ['', [ Validators.required, Validators.pattern(this.validatorsService.dniPattern ) ]],
+    name: ['', [ Validators.required, Validators.minLength(3) ]],
+    lastname: ['', [ Validators.required, Validators.minLength(3) ]],
+    password: ['', [ Validators.required, Validators.minLength(6) ]],
+    password2: ['', [ Validators.required, Validators.minLength(6) ]],
+    birthDate: [new Date(), [Validators.required, this.validatorsService.isValidDate]],
+    email: ['', [ Validators.required, Validators.pattern(this.validatorsService.emailPattern) ]],
+    address: [''],
   }, {
     validators: [
       this.validatorsService.isFieldOneEqualFieldTwo('password','password2')
@@ -64,7 +64,7 @@ export class RegisterPageComponent {
         },
         error: (message: any) => {
           this.serverErrors = message;
-          console.log('Errores del servidor:', this.serverErrors);
+          console.error('Errores del servidor:', this.serverErrors);
         }
       })
   }

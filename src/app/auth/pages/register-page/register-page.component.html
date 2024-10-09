@@ -52,6 +52,7 @@
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error *ngIf="registerForm.get('birthDate')?.hasError('required')">La fecha de nacimiento es <strong>requerida</strong>.</mat-error>
+          <mat-error *ngIf="registerForm.get('birthDate')?.hasError('dateInvalid')">La fecha de nacimiento es <strong>invalida</strong>.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">

@@ -35,19 +35,14 @@ export class EventPageComponent implements OnInit {
   public eventForm = new FormGroup(
     {
       id: new FormControl(''),
-      title: new FormControl('Pruebita', [Validators.required, Validators.minLength(5)]),
+      title: new FormControl('', [Validators.required, Validators.minLength(5)]),
       startDate: new FormControl<Date>(new Date(), [Validators.required]),
       endDate: new FormControl<Date>(new Date(), [Validators.required]),
       allDay: new FormControl<Boolean>(true, [Validators.required]),
-      description: new FormControl('LOcura', [Validators.required, Validators.minLength(5)]),
+      description: new FormControl('', [Validators.required, Validators.minLength(5)]),
       location: new FormControl(''),
     }
   );
-
-  // range = new FormGroup({
-  //   start: new FormControl<Date | null>(null),
-  //   end: new FormControl<Date | null>(null),
-  // });
 
   hours = new FormGroup({
     start: new FormControl(''),
@@ -67,14 +62,11 @@ export class EventPageComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.currentUser();
 
-    console.log((this.user!.role === Role.Admin || this.user!.role === Role.Comm))
-
     if(!this.data) this.isEditMode = true;
     else if (this.data.id) {
       this.eventsService.getEventById(this.data.id)
         .subscribe(event => {
           if (!event) return this.dialogRef.close();
-          // this.range.setValue({ start: event.startDate, end: event.endDate });
           if (event.allDay) {
             this.hours.setValue({ start: '', end: '' });
           } else {
@@ -92,8 +84,6 @@ export class EventPageComponent implements OnInit {
     } else if (this.data.selectInfo && (this.user!.role === Role.Admin || this.user!.role === Role.Comm)) {
       this.isEditMode = true;
       const { startStr, endStr } = this.data.selectInfo;
-      console.log('startStr', startStr);
-      console.log('endStr', endStr);
       const dates = { startDate: new Date(startStr), endDate: new Date(endStr) };
       this.eventForm.patchValue(dates);
     }
@@ -104,7 +94,6 @@ export class EventPageComponent implements OnInit {
   }
 
   get currentEventOnForm() {
-    console.log('currentEventOnForm', this.eventForm.value);
     const event = this.eventForm.value as Event;
     const hoursStart = this.hours.value.start?.split(':') || [];
     const endStart = this.hours.value.end?.split(':') || [];
@@ -116,10 +105,7 @@ export class EventPageComponent implements OnInit {
       event.endDate.setHours(Number(endStart[0]), Number(endStart[1]));
     } else {
       const daysDiff = event.endDate.getDate() - event.startDate.getDate();
-      console.log('daysDiff', daysDiff);
       event.endDate = addDays(event.startDate, daysDiff);
-      console.log('event.endDate', event.endDate);
-      console.log('event.startDate', event.startDate);
     }
     return event;
   }
@@ -133,7 +119,6 @@ export class EventPageComponent implements OnInit {
 
 
     if (event.id) {
-      console.log('Actualizando evento');
       this.eventsService.updateEvent(event)
         .subscribe({
           next: (event) => {
@@ -143,13 +128,12 @@ export class EventPageComponent implements OnInit {
           },
           error: (message) => {
             this.serverErrors = message;
-            console.log('Errores del servidor:', this.serverErrors);
+            console.error('Errores del servidor:', this.serverErrors);
           }
         })
 
       return;
     } else {
-      console.log('Creando evento');
       this.eventsService.addEvent(event)
       .subscribe({
         next: (event) => {
@@ -159,7 +143,7 @@ export class EventPageComponent implements OnInit {
         },
         error: (message) => {
           this.serverErrors = message;
-          console.log('Errores del servidor:', this.serverErrors);
+          console.error('Errores del servidor:', this.serverErrors);
         }
       })
 

@@ -78,7 +78,6 @@ export class PayComponentComponent implements OnInit {
   }
 
   onPay(){
-    console.log(this.pay);
     this.paysService.update(this.pay)
   }
 

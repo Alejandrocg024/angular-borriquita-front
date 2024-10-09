@@ -5,8 +5,6 @@ import { ListPageComponent } from './pages/list-page/list-page.component';
 import { AnnouncementPageComponent } from './pages/announcement-page/announcement-page.component';
 import { LayoutPageComponent } from '../home/layouts/layout-page/layout-page.component';
 
-
-// localhost:4200/heroes
 const routes: Routes = [
   {
     path: '',

@@ -1,0 +1,38 @@
+
+.titulares {
+  display: flex;
+  align-items: stretch;
+}
+
+.content-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image  {
+  width: 100%;
+  height: auto;
+  margin: 3vh 0 3vh 0;
+  border-radius: 15px;
+}
+
+.vertical-divider {
+  width: 2px;
+  background-color: var(--primary);
+  margin: 32px   ;
+}
+.contenido {
+  align-content: center;
+  padding: 3vh 0 3vh 0;
+}
+.contenido h2 {
+  color: var(--primary);
+  text-align: center;
+  font-weight: bold;
+}
+
+.contenido p {
+  padding-left: 30px;
+  text-align: justify;
+}

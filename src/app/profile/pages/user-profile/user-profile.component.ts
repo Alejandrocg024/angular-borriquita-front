@@ -97,11 +97,7 @@ export class UserProfileComponent implements OnInit {
 
     const data = this.userForm.value;
 
-        // Si el password es '******' no se envía al servidor, se borra esa propiedad del objeto
     if(data.password === '******') delete data.password;
-
-    console.log('Data:', data);
-
 
     this.userService.updateUser(data)
       .subscribe({
@@ -111,7 +107,7 @@ export class UserProfileComponent implements OnInit {
         },
         error: (message: any) => {
           this.serverErrors = message;
-          console.log('Errores del servidor:', this.serverErrors);
+          console.error('Errores del servidor:', this.serverErrors);
         }
       })
 
@@ -128,7 +124,7 @@ export class UserProfileComponent implements OnInit {
         },
         error: (message: any) => {
           this.serverErrors = message;
-          console.log('Errores del servidor:', this.serverErrors);
+          console.error('Errores del servidor:', this.serverErrors);
         }
       })
   }

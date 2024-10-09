@@ -83,7 +83,7 @@ export class NewPageComponent implements OnInit {
           },
           error: (message: any) => {
             this.serverErrors = message;
-            console.log('Errores del servidor:', this.serverErrors);
+            console.error('Errores del servidor:', this.serverErrors);
           }
         })
 
@@ -98,7 +98,7 @@ export class NewPageComponent implements OnInit {
         },
         error: (message: any) => {
           this.serverErrors = message;
-          console.log('Errores del servidor:', this.serverErrors);
+          console.error('Errores del servidor:', this.serverErrors);
         }
       })
   }

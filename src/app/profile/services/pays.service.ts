@@ -50,7 +50,6 @@ export class PaysService {
   }
 
   register(pay: Pay): Observable<Pay> {
-    console.log('pay', pay);
     const token = localStorage.getItem('token');
     return this.http.post<Pay>(`${this.baseUrl}/pay`, pay, {
       headers: new HttpHeaders({

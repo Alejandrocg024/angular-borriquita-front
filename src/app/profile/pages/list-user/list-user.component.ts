@@ -22,7 +22,6 @@ export class ListUserComponent implements OnInit {
 
     ngOnInit(): void {
       const me = this.authService.currentUser();
-      console.log(me);
 
       if(!me) {
         this.router.navigateByUrl('');
@@ -38,7 +37,6 @@ export class ListUserComponent implements OnInit {
           })
         )
         .subscribe( user => {
-          console.log(user);
           if ( !user) return this.router.navigateByUrl('');
           this.user = user;
           return;

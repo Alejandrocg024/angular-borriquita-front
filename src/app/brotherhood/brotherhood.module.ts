@@ -7,6 +7,7 @@ import { MaterialModule } from '../material/material.module';
 import { InformationComponent } from './components/information/information.component';
 import { TitularesComponent } from './components/titulares/titulares.component';
 import { DomingoComponent } from './components/domingo/domingo.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -21,7 +22,8 @@ import { DomingoComponent } from './components/domingo/domingo.component';
     CommonModule,
     BrotherhoodRoutingModule,
     HomeModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ],
 })
 export class BrotherhoodModule { }

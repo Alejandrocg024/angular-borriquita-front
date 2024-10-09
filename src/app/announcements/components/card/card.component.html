@@ -1,7 +1,4 @@
 <mat-card>
-  <!-- <mat-card-header>
-    <mat-card-title>{{ announcement.title }}</mat-card-title>
-  </mat-card-header> -->
 
   <img *ngIf="announcement.media" mat-card-image [src]="announcement.media" [alt]="announcement.title">
 
@@ -28,7 +25,7 @@
           <mat-icon>edit</mat-icon>
           Editar
         </button>
-        <button mat-button mat-raised [routerLink]="['./', this.announcement.id]">
+        <button mat-button mat-raised [routerLink]="['/noticias', this.announcement.id]">
           <mat-icon>more_horiz</mat-icon>
           Detalles
         </button>

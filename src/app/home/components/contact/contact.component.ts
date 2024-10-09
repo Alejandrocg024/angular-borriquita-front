@@ -25,7 +25,7 @@ export class ContactComponent implements OnInit {
   private authService = inject( AuthService );
 
   public contactForm: FormGroup = this.fb.group({
-    type:    ['CONSULTA', [ Validators.required ]],
+    type:    ['', [ Validators.required ]],
     date:    [new Date(), [ Validators.required ]],
     details: ['', [ Validators.required, Validators.minLength(10) ]],
     email:   ['', [ Validators.required, Validators.pattern(this.validatorsService.emailPattern) ]],
@@ -54,7 +54,7 @@ export class ContactComponent implements OnInit {
           this.showSnackbar('Formulario enviado correctamente. Recibiras una respuesta en tu correo.')},
         error: (message: any) => {
           this.serverErrors = message;
-          console.log('Errores del servidor:', this.serverErrors);
+          console.error('Errores del servidor:', this.serverErrors);
         }
     })
   }

@@ -11,6 +11,18 @@ export class ValidatorsService {
     return form.controls[field].errors && form.controls[field].touched;
   }
 
+  public isValidDate ( control: FormControl ): ValidationErrors | null {
+    const date = new Date(control.value);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    if ( date >= today || date < new Date('1900-01-01') ) {
+      return { dateInvalid: true }
+    }
+
+    return null;
+  }
+
 
   public isFieldOneEqualFieldTwo( field1: string, field2: string ) {
 

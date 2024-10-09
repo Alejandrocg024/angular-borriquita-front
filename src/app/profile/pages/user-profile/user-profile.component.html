@@ -38,7 +38,6 @@
             [value]="isEditingPassword ? '': '******'" required formControlName="password"
             [readonly]="!isEditingPassword" placeholder="******">
 
-          <!-- Botón para alternar entre modo de edición y solo lectura -->
           <button mat-icon-button matSuffix (click)="togglePasswordEdit()" type="button">
             <mat-icon>{{ isEditingPassword ? 'close' : 'edit' }}</mat-icon>
           </button>

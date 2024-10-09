@@ -41,11 +41,6 @@ export class CalendarComponent implements OnInit{
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this)
-    /* TODO: you can update a remote database when these fire:
-    eventAdd:
-    eventChange:
-    eventRemove:
-    */
   });
   currentEvents = signal<EventApi[]>([]);
 
@@ -77,8 +72,7 @@ export class CalendarComponent implements OnInit{
 
     const calendarApi = selectInfo.view.calendar;
 
-    calendarApi.unselect(); // clear date selection
-    console.log(selectInfo);
+    calendarApi.unselect();
 
     const dialogRef = this.dialog.open(EventPageComponent, {
       data: { selectInfo }});
@@ -86,14 +80,6 @@ export class CalendarComponent implements OnInit{
     dialogRef.componentInstance.eventUpdated.subscribe(() => {
       this.loadEvents();
     });
-    // calendarApi.addEvent({
-    //   id: '19',
-    //   title,
-    //   start: selectInfo.startStr,
-    //   end: selectInfo.endStr,
-    //   allDay: selectInfo.allDay
-    // });
-
   }
 
   onNewEvent() {
@@ -105,9 +91,6 @@ export class CalendarComponent implements OnInit{
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    // if (confirm(`Estas seguro que quieres eliminar el evento '${clickInfo.event.title}'`)) {
-    //   clickInfo.event.remove();
-    // }
     const dialogRef = this.dialog.open(EventPageComponent, {
       data: {
         id: clickInfo.event.id

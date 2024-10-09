@@ -27,11 +27,11 @@ export class PayDialogComponent implements OnInit {
 
   public payForm: FormGroup = this.fb.group({
     userPayer: [''],
-    concept: ['fff', Validators.required],
-    quantity: [10.56, [Validators.required, Validators.min(1)]],
+    concept: ['', Validators.required],
+    quantity: [0, [Validators.required, Validators.min(1)]],
     startDate: ['', Validators.required],
     finishDate: ['', Validators.required],
-    state: ['PENDING', Validators.required],
+    state: ['', Validators.required],
   });
 
   private userService = inject(UserService);
@@ -83,7 +83,7 @@ export class PayDialogComponent implements OnInit {
         next: () => this.dialogRef.close(),
         error: (message: any) => {
           this.serverErrors = message;
-          console.log('Errores del servidor:', this.serverErrors);
+          console.error('Errores del servidor:', this.serverErrors);
         }
       })
 

@@ -25,7 +25,6 @@ export class NavbarComponent {
       case AuthStatus.authenticated:{
         this.logged = true;
         this.userId = this.authService.currentUser()!.id;
-        console.log(this.userId);
         return;
       }
 

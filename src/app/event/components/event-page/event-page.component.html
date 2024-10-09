@@ -1,12 +1,10 @@
 
 <div style="width: 600px;">
   <h2 mat-dialog-title>
-    <!-- Mostrar título o campo de edición según el modo -->
     <span *ngIf="!isEditMode">{{ event?.title }}</span>
   </h2>
 
   <mat-dialog-content>
-    <!-- Modo de lectura -->
     <div *ngIf="!isEditMode">
       <div *ngIf="!eventForm.value.allDay">
         <p>
@@ -94,9 +92,6 @@
 
     </form>
 
-    <!-- <span>
-      {{ eventForm.value | json }}
-    </span> -->
   </mat-dialog-content>
 
   <mat-dialog-actions>

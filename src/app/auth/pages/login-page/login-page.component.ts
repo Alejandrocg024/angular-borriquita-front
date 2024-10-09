@@ -23,8 +23,8 @@ export class LoginPageComponent {
 
 
   public myForm: FormGroup = this.fb.group({
-    dni:    ['12345678Z', [ Validators.required, Validators.pattern(this.validatorsService.dniPattern ) ]],
-    password: ['admin123', [ Validators.required, Validators.minLength(6) ]],
+    dni:    ['', [ Validators.required, Validators.pattern(this.validatorsService.dniPattern ) ]],
+    password: ['', [ Validators.required, Validators.minLength(6) ]],
   });
 
   onLogin() {
@@ -38,12 +38,8 @@ export class LoginPageComponent {
       .subscribe({
         next: () => this.router.navigateByUrl('/profile'),
         error: (message) => {
-          // if( message = 'Tienes cuotas pendientes de pago. Contacte con la hermandad.'){
-          //   this.haveToPay = true;
-          // }
-          console.log('Error:', message);
           this.serverErrors = message;
-          console.log('Errores del servidor:', this.serverErrors);
+          console.error('Errores del servidor:', this.serverErrors);
         }
       })
 

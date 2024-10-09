@@ -12,7 +12,6 @@
     <mat-card-header>
       <mat-card-title>
         <h1>{{ user.name }} {{user.lastname}}</h1>
-        <!-- Mat chip con el rol -->
         <mat-chip *ngIf="user.role == 'ADMIN_ROLE'" color="primary">
           ADMINISTRADOR
         </mat-chip>

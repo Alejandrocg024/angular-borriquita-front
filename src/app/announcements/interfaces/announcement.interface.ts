@@ -20,4 +20,3 @@ export interface Announcement {
   media?:            string;
 }
 
-

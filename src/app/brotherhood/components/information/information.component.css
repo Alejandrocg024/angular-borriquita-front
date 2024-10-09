@@ -1,0 +1,19 @@
+.parroquia {
+  text-align: center;
+}
+
+.altar img{
+  width: 60%;
+  height: auto;
+  margin: 4vh;
+  border: 0.5px solid var(--primary);
+  border-radius: 8px;
+}
+.contenido h1{
+  color: var(--primary);
+}
+
+.mapa {
+ margin: 5vh;
+}
+
