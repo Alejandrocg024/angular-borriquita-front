@@ -1,17 +1,6 @@
 <div class="payment-confirmation">
   <h1>¡Confirmación de Pago!</h1>
 
-  <div class="payment-details">
-    <p><strong>ID de Pago:</strong> {{ pay.id }}</p>
-    <p><strong>ID de Usuario:</strong> {{ pay.user }}</p>
-    <p><strong>Concepto:</strong> {{ pay.concept }}</p>
-    <p><strong>Cantidad:</strong> €{{ pay.quantity | number:'1.2-2' }}</p>
-    <p><strong>Fecha de Inicio:</strong> {{ pay.startDate | date:'short' }}</p>
-    <p><strong>Fecha de Fin:</strong> {{ pay.finishDate | date:'short' }}</p>
-    <p><strong>Estado:</strong> {{ pay.state }}</p>
-    <p><strong>Método de Pago:</strong> {{ pay.payMethod }}</p>
-  </div>
-
   <div class="confirmation-message">
     <p>¡Gracias por tu pago! El proceso ha sido completado con éxito.</p>
   </div>
