@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { isAuthenticatedGuard, isNotAuthenticatedGuard } from './auth/guards';
+import { ConfirmPayComponent } from './profile/pages/confirm-pay/confirm-pay.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,12 @@ const routes: Routes = [
     path: 'noticias',
     loadChildren: () => import('./announcements/announcements.module').then(m => m.AnnouncementsModule),
   },
+  {
+    path: 'pago',
+    canActivate: [isAuthenticatedGuard],
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+  },
+  { path: 'hermanos/aceptar/:token', component: ConfirmPayComponent },
   {
     path: 'hermanos',
     canActivate: [isAuthenticatedGuard],

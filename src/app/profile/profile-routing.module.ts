@@ -17,7 +17,6 @@ const routes: Routes = [
       { path: '', canActivate: [isMayGuard], component: AdminPanelComponent },
       { path: ':id', component: ListUserComponent },
       { path: 'editar/:id', component: UserProfileComponent },
-      { path: 'aceptar/:token', component: ConfirmPayComponent },
       { path: '**', redirectTo: '' },
     ]
   }
