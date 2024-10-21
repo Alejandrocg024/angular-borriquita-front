@@ -31,7 +31,7 @@ export class PayDialogComponent implements OnInit {
     quantity: [0, [Validators.required, Validators.min(1)]],
     startDate: ['', Validators.required],
     finishDate: ['', Validators.required],
-    state: ['', Validators.required],
+    state: ['PENDING', Validators.required],
   });
 
   private userService = inject(UserService);
